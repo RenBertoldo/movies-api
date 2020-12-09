@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment: 
+      POSTGRES_PASSWORD: "iliamovies"
+    ports:
+      - "5432:5432"
+    networks: 
+      - api-env
+  movies_api:
+    build: .
+    command: npm run:watch
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/src/
+      - nodemodules:/src/nodemodules
+    networks: 
+      - api-env
+    depends_on: 
+      - postgres
+
+networks:
+  api-env:
+    driver: bridge
+
+volumes:
+  nodemodules: {}
