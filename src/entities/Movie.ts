@@ -26,7 +26,7 @@ export class Movie {
   @Column()
   adult!: boolean;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   backdrop_path!: string;
 
   @Column()
@@ -36,10 +36,10 @@ export class Movie {
   @JoinTable()
   genres!: Genre[];
 
-  @Column()
+  @Column({ nullable: true, default: null })
   homepage!: string;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   imdb_id!: string;
 
   @Column()
@@ -48,13 +48,13 @@ export class Movie {
   @Column()
   original_title!: string;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   overview!: string;
 
   @Column()
   popularity!: number;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   poster_path!: string;
 
   @ManyToMany(() => ProductionCompany)
@@ -71,7 +71,7 @@ export class Movie {
   @Column()
   revenue!: number;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   runtime!: number;
 
   @ManyToMany(() => SpokenLanguage)
@@ -81,7 +81,7 @@ export class Movie {
   @Column('int')
   status!: Status;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   tagline!: string;
 
   @Column()
