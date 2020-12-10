@@ -51,6 +51,7 @@ export class createTranslationsDataTable1607601186988
         ],
       }),
     );
+    await queryRunner.commitTransaction();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

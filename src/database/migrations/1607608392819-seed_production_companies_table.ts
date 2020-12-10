@@ -1,9 +1,8 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
-import { ProductionCompany } from '../../entities/ProductionCompany';
+import { getRepository, MigrationInterface } from 'typeorm';
 
-export class populateProductionCompaniesTable1607575579214
+export class seedProductionCompaniesTable1607608392819
   implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
+  public async up(): Promise<void> {
     const companies = [
       { name: 'Warner Bros', origin_country: 'US' },
       { name: 'Sony Pictures Motion Picture.', origin_country: 'US' },
@@ -20,14 +19,14 @@ export class populateProductionCompaniesTable1607575579214
       { name: 'Pixar', origin_country: 'US' },
       { name: 'Globo Filmes', origin_country: 'BR' },
     ];
-    const productionCompaniesRepository = getRepository(ProductionCompany);
+    const productionCompaniesRepository = getRepository('production_companies');
 
     for (const company of companies) {
-      const productionCompany = productionCompaniesRepository.create(company);
-
-      await productionCompaniesRepository.save(productionCompany);
+      await productionCompaniesRepository.save(company);
     }
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(): Promise<void> {
+    // Do nothing
+  }
 }

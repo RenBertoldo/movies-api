@@ -1,9 +1,11 @@
-import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
+import { getManager, MigrationInterface, QueryRunner } from 'typeorm';
 import { Genre } from '../../entities/Genre';
 
-export class populateGenresTable1607571388497 implements MigrationInterface {
+export class seedGenresTable1607608208793 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const genreRepository = getRepository(Genre);
+    await queryRunner.startTransaction();
+
+    const entityManager = getManager();
 
     const genres = [
       'Comedy',
@@ -29,11 +31,14 @@ export class populateGenresTable1607571388497 implements MigrationInterface {
       'Sport',
     ];
 
-    for (const genre of genres) {
-      const genreData = genreRepository.create({ name: genre });
-      await genreRepository.save(genreData);
-    }
+    await entityManager.transaction(async manager => {
+      for (const genre of genres) {
+        await manager.insert(Genre, { name: genre });
+      }
+    });
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(): Promise<void> {
+    // Do nothing
+  }
 }

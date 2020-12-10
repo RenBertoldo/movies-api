@@ -1,10 +1,8 @@
-import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
+import { getRepository, MigrationInterface } from 'typeorm';
 
-import { ProductionCountry } from '../../entities/ProductionCountry';
-
-export class populateProductionCountriesTable1607575589966
+export class seedProductionCountriesTable1607608474395
   implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
+  public async up(): Promise<void> {
     const countries = {
       AF: 'Afghanistan',
       AX: 'Aland Islands',
@@ -252,21 +250,18 @@ export class populateProductionCountriesTable1607575589966
       ZM: 'Zambia',
       ZW: 'Zimbabwe',
     };
-
     const keys = Object.keys(countries);
     const values = Object.values(countries);
-
-    const productionCountryRepository = getRepository(ProductionCountry);
-
+    const productionCountryRepository = getRepository('production_countries');
     for (let i = 0; i < keys.length; i++) {
-      const productionCountry = productionCountryRepository.create({
+      await productionCountryRepository.save({
         name: values[i],
         iso_3166_1: keys[i],
       });
-
-      await productionCountryRepository.save(productionCountry);
     }
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(): Promise<void> {
+    // Do nothing
+  }
 }

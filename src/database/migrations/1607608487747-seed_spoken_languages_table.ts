@@ -1,10 +1,8 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { getRepository, MigrationInterface } from 'typeorm';
 
-import { SpokenLanguage } from '../../entities/SpokenLanguage';
-
-export class populateSpokenLanguagesTable1607575624828
+export class seedSpokenLanguagesTable1607608487747
   implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
+  public async up(): Promise<void> {
     const languages = {
       ab: {
         name: 'Abkhaz',
@@ -740,21 +738,18 @@ export class populateSpokenLanguagesTable1607575624828
         nativeName: 'Saɯ cueŋƅ, Saw cuengh',
       },
     };
-
-    const spokenLanguagesRepository = getRepository(SpokenLanguage);
-
+    const spokenLanguagesRepository = getRepository('spoken_languages');
     const iso_639_1 = Object.keys(languages);
     const values = Object.values(languages);
-
     for (let i = 0; i < values.length; i++) {
-      const spokenLanguage = spokenLanguagesRepository.create({
+      await spokenLanguagesRepository.save({
         iso_639_1: iso_639_1[i],
         name: values[i].name,
       });
-
-      await spokenLanguagesRepository.save(spokenLanguage);
     }
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(): Promise<void> {
+    // Do nothing
+  }
 }
