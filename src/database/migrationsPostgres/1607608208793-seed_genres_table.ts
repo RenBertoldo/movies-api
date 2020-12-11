@@ -1,5 +1,4 @@
 import { getManager, MigrationInterface, QueryRunner } from 'typeorm';
-import { Genre } from '../../entities/Genre';
 
 export class seedGenresTable1607608208793 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -33,7 +32,7 @@ export class seedGenresTable1607608208793 implements MigrationInterface {
 
     await entityManager.transaction(async manager => {
       for (const genre of genres) {
-        await manager.insert(Genre, { name: genre });
+        await manager.insert('genres', { name: genre });
       }
     });
   }
