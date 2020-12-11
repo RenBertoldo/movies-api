@@ -27,7 +27,6 @@ export default class TranslationController {
   public async create(request: Request, response: Response): Promise<Response> {
     const params = request.params;
 
-    console.log(params);
     const data = request.body;
 
     const input = {

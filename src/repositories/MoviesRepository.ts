@@ -158,7 +158,6 @@ class MoviesRepository {
   public async addTranslationToMovie(
     data: TranslationsInterface,
   ): Promise<TranslationsInterface | undefined> {
-    console.log({ data });
     const movie = await this.moviesRepository.findOne({
       where: { id: data.id },
     });
@@ -188,7 +187,6 @@ class MoviesRepository {
   public async updateTranslationsOfMovie(
     data: TranslationsInterface,
   ): Promise<TranslationsInterface | undefined> {
-    console.log({ data });
     const { translations } = data;
     const movie = await this.moviesRepository.findOne({
       where: { id: data.id },
