@@ -1,10 +1,10 @@
 module.exports = [
   {
     name: 'default',
-    type: 'mongodb',
-    host: 'localhost',
-    port: 27017,
-    database: 'test_ilia',
+    type: process.env.DB_TYPE || 'mongodb',
+    host: process.env.DB_HOST || 'mongodb',
+    port: process.env.DB_PORT || 27017,
+    database: process.env.DB_NAME || 'test_ilia',
     useUnifiedTopology: true,
     entities: ['./src/entities/**/*.ts'],
     migrations: ['./src/database/migrations/**/*.ts'],

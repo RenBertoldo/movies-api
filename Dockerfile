@@ -1,11 +1,9 @@
 FROM node:14-alpine
 
-WORKDIR /src
+WORKDIR /app
 
-ADD package.json /src
+ADD . /app
 
-RUN npm i --silent
+RUN yarn
 
-ADD . /src
-
-CMD npm start
+CMD yarn start

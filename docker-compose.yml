@@ -1,13 +1,5 @@
 version: '3'
 services:
-  # postgres:
-  #   image: postgres
-  #   environment: 
-  #     POSTGRES_PASSWORD: "iliamovies"
-  #   ports:
-  #     - "5432:5432"
-  #   networks: 
-  #     - api-env
   mongodb:
     image: mongo:4
     ports:
@@ -15,13 +7,12 @@ services:
     networks: 
       - api-env
   movies_api:
-    build: .
-    command: npm run:watch
+    build: ./
     ports:
       - "3000:3000"
     volumes:
       - .:/src/
-      - nodemodules:/src/nodemodules
+      - nodemodules:/src/node_modules
     networks: 
       - api-env
     links:
