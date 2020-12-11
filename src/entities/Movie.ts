@@ -1,14 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Genre } from './Genre';
-import { ProductionCompany } from './ProductionCompany';
-import { ProductionCountry } from './ProductionCountry';
-import { SpokenLanguage } from './SpokenLanguage';
+import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+
 enum Status {
   'Rumored',
   'Planned',
@@ -17,10 +8,12 @@ enum Status {
   'Released',
   'Canceled',
 }
-
-@Entity()
+@Entity('movies')
 export class Movie {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn({ type: 'number' })
+  _id!: ObjectID;
+
+  @Column()
   id!: number;
 
   @Column()
@@ -29,12 +22,14 @@ export class Movie {
   @Column({ nullable: true, default: null })
   backdrop_path!: string;
 
+  @Column('simple-json', { nullable: true, default: null })
+  belongs_to_collection!: any;
+
   @Column()
   budget!: number;
 
-  @ManyToMany(() => Genre)
-  @JoinTable()
-  genres!: Genre[];
+  @Column()
+  genres!: { id: number; name: string }[];
 
   @Column({ nullable: true, default: null })
   homepage!: string;
@@ -57,13 +52,16 @@ export class Movie {
   @Column({ nullable: true, default: null })
   poster_path!: string;
 
-  @ManyToMany(() => ProductionCompany)
-  @JoinTable()
-  production_companies!: ProductionCompany[];
+  @Column()
+  production_companies!: {
+    id: number;
+    name: string;
+    logo_path?: string;
+    origin_country: string;
+  }[];
 
-  @ManyToMany(() => ProductionCountry)
-  @JoinTable()
-  production_countries!: ProductionCountry[];
+  @Column('simple-array')
+  production_countries!: { name: string; iso_3166_1: string }[];
 
   @Column()
   release_date!: Date;
@@ -74,9 +72,8 @@ export class Movie {
   @Column({ nullable: true, default: null })
   runtime!: number;
 
-  @ManyToMany(() => SpokenLanguage)
-  @JoinTable()
-  spoken_languages!: SpokenLanguage[];
+  @Column('simple-array')
+  spoken_languages!: { name: string; iso_639_1: string }[];
 
   @Column('int')
   status!: Status;
@@ -92,4 +89,17 @@ export class Movie {
 
   @Column()
   voute_count!: number;
+
+  @Column({ nullable: true, default: null })
+  translations!: {
+    iso_3166_1: string;
+    iso_639_1: string;
+    name: string;
+    english_name: string;
+    data: {
+      title: string;
+      overview: string;
+      homepage: string;
+    };
+  }[];
 }
