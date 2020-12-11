@@ -1,11 +1,17 @@
 version: '3'
 services:
-  postgres:
-    image: postgres
-    environment: 
-      POSTGRES_PASSWORD: "iliamovies"
+  # postgres:
+  #   image: postgres
+  #   environment: 
+  #     POSTGRES_PASSWORD: "iliamovies"
+  #   ports:
+  #     - "5432:5432"
+  #   networks: 
+  #     - api-env
+  mongodb:
+    image: mongo:4
     ports:
-      - "5432:5432"
+      - 27017:27017
     networks: 
       - api-env
   movies_api:
@@ -18,8 +24,10 @@ services:
       - nodemodules:/src/nodemodules
     networks: 
       - api-env
+    links:
+      - mongodb
     depends_on: 
-      - postgres
+      - mongodb
 
 networks:
   api-env:
