@@ -9,7 +9,7 @@ routes.get('/', (request: Request, response: Response) => {
   return response.json({ message: 'Welcome to Movie API' });
 });
 
-routes.use('/movies', moviesRouter);
-routes.use('/movies/:movie_id/translations', translationsRouter);
+routes.use('/', moviesRouter);
+routes.use('/movies', translationsRouter);
 
 export default routes;
